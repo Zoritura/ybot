@@ -14,4 +14,3 @@ A small browser extension that closes the annoying "Continue watching?" popup so
 Once enabled, the extension runs in the background while you use YouTube or YouTube Music. It helps keep playback going without interruption from the usual popup.
 
 You can turn it on or off from the extension icon in your browser toolbar.
-# ybot
