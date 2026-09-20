@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube NonStop</title>
+  <style>
+    :root {
+      --bg: #f3f1ee;
+      --surface: #ffffff;
+      --border: #d8d2ca;
+      --text: #1f2937;
+      --text-muted: #5f6773;
+      --accent: #9d3c3c;
+      --accent-hover: #7c2d2d;
+      --accent-off: #c7c0b7;
+      --radius: 10px;
+      --space: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 280px;
+      font-family: -apple-system, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .logo {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .header-text h1 {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    .header-text p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .body {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+    }
+
+    .toggle-label {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .toggle-label strong {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .toggle-label span {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .switch input { display: none; }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: var(--accent-off);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .slider::before {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      left: 3px;
+      top: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+
+    .switch input:checked + .slider { background: var(--accent); }
+    .switch input:checked + .slider::before { transform: translateX(18px); }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4d8a5b;
+      flex-shrink: 0;
+    }
+
+    .dot.off {
+      background: var(--accent-off);
+      box-shadow: none;
+    }
+
+    .sites {
+      display: flex;
+      gap: 6px;
+    }
+
+    .site-badge {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 7px 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .site-badge strong {
+      display: block;
+      font-size: 12px;
+      color: var(--text);
+      font-weight: 500;
+      margin-bottom: 1px;
+    }
+
+    .footer {
+      padding: 8px 16px 12px;
+      font-size: 10px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <svg class="logo" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <rect width="32" height="32" rx="7" fill="#EF4444"/>
+      <polygon points="12,9 24,16 12,23" fill="white"/>
+      <rect x="7" y="20" width="18" height="3" rx="1.5" fill="white" opacity="0.85"/>
+    </svg>
+    <div class="header-text">
+      <h1>YouTube NonStop</h1>
+      <p>Popup dismisser for YouTube</p>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="toggle-row">
+      <div class="toggle-label">
+        <strong>Auto-dismiss popups</strong>
+        <span>Click "Yes, I'm here" automatically</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="toggle" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="status" id="statusRow">
+      <div class="dot" id="statusDot"></div>
+      <span id="statusText">Active and watching for popups</span>
+    </div>
+
+    <div class="sites">
+      <div class="site-badge">
+        <strong>YouTube</strong>
+        youtube.com
+      </div>
+      <div class="site-badge">
+        <strong>YT Music</strong>
+        music.youtube.com
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">v1.0.0 &nbsp;·&nbsp; Made for Opera / Chromium</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
